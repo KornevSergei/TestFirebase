@@ -3,8 +3,10 @@ package com.example.testfirebase;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -59,9 +61,18 @@ public class MainActivity extends AppCompatActivity {
         //вписываем данные в клас Юзер согласно конструктору
         User newUser = new User(id, name, secondName, email);
 
-        //отправляем информацию в базу
-        myDatabase.push().setValue(newUser);
 
+        //проверяем на пустоту, если пусто - код не выполняется
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(secondName) && !TextUtils.isEmpty(email)) {
+            //отправляем информацию в базу
+            myDatabase.push().setValue(newUser);
+            Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT).show();
+
+
+            //делаем уведосление при пустом вводе
+        } else {
+            Toast.makeText(this, "Пустое поле", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
